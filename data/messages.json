@@ -1,0 +1,65 @@
+[
+  {
+    "id": "msg_1791726606938_wzx7l",
+    "name": "Hiring Manager",
+    "email": "recruiter@tech.com",
+    "subject": "Interview Invitation",
+    "message": "Hi Sudarshan, loved your GameHub project! Let us connect.",
+    "timestamp": "2026-10-11T13:50:06.938Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791722120325_a2j46",
+    "name": "Sudarshan Lama",
+    "email": "visitor@example.com",
+    "subject": "Testing instant fix",
+    "message": "Direct message is now blazing fast!",
+    "timestamp": "2026-10-11T12:35:20.325Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791721823457_r9qkt",
+    "name": "Sudarshan Fan",
+    "email": "fan@example.com",
+    "subject": "Testing instant delivery",
+    "message": "Testing that the form sends immediately!",
+    "timestamp": "2026-10-11T12:30:23.457Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791721200090_9qv6t",
+    "name": "Alex",
+    "email": "alex@example.com",
+    "subject": "Portfolio Inquiry",
+    "message": "Hi",
+    "timestamp": "2026-10-11T12:20:00.090Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791721038857_f3gmi",
+    "name": "Test User",
+    "email": "test@example.com",
+    "subject": "Hello",
+    "message": "Test message",
+    "timestamp": "2026-10-11T12:17:18.857Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791720782905_1nund",
+    "name": "Sudarshan Lama",
+    "email": "lama.sudarshan22@gmail.com",
+    "subject": "Portfolio Inquiry",
+    "message": "Hello",
+    "timestamp": "2026-10-11T12:13:02.905Z",
+    "deliveredVia": "inbox_storage"
+  },
+  {
+    "id": "msg_1791718009587_80fm8",
+    "name": "Alex Rivera",
+    "email": "alex@example.com",
+    "subject": "Excited to collaborate",
+    "message": "Hey Sudarshan, loved checking out GameHub! Would love to chat about building games together.",
+    "timestamp": "2026-10-11T11:26:49.587Z",
+    "deliveredVia": "inbox_storage"
+  }
+]
