@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, ArrowUpRight, Github, Linkedin, Instagram, Mail } from 'lucide-react';
+import { Menu, X, Sun, Moon, ArrowUpRight, Github, Linkedin, Instagram, Mail, FileText } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData.ts';
 
 interface NavbarProps {
   theme: 'dark' | 'light';
   toggleTheme: () => void;
+  onOpenResume?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
+export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -17,7 +18,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     { label: 'About', href: '#about', id: 'about' },
     { label: 'Education', href: '#education', id: 'education' },
     { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'My Websites', href: '#websites', id: 'websites' },
+    { label: 'GameHub Arcade', href: '#projects', id: 'projects' },
     { label: 'Journey', href: '#journey', id: 'journey' },
     { label: 'Contact', href: '#contact', id: 'contact' },
   ];
@@ -51,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       setIsScrolled(window.scrollY > 30);
 
       // Scrollspy active section
-      const sections = ['home', 'about', 'education', 'skills', 'websites', 'journey', 'contact'];
+      const sections = ['home', 'about', 'education', 'skills', 'projects', 'journey', 'contact'];
       const scrollPosition = window.scrollY + 180;
 
       for (const sectionId of sections) {
@@ -97,7 +98,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </a>
 
           {/* Zone 2: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-xs tracking-wider uppercase font-semibold text-slate-300">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-xs tracking-wider uppercase font-semibold text-slate-300">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -118,7 +119,8 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </nav>
 
           {/* Zone 3: Actions (Theme Toggle, Connect CTA, Hamburger) */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          <div className="flex items-center gap-2 sm:gap-2.5">
+            {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
               className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
@@ -128,9 +130,22 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
               {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-blue-400" />}
             </button>
 
+            {/* View Résumé Button */}
+            {onOpenResume && (
+              <button
+                onClick={onOpenResume}
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold uppercase tracking-wider text-cyan-300 hover:text-white bg-cyan-950/50 hover:bg-cyan-900/60 border border-cyan-800/50 rounded-xl transition-all cursor-pointer whitespace-nowrap active:scale-95"
+                title="View / Download Résumé (PDF)"
+              >
+                <FileText className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Résumé</span>
+              </button>
+            )}
+
+            {/* Connect CTA */}
             <a
               href="#contact"
-              className="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-md shadow-blue-600/20 active:scale-95 whitespace-nowrap"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-white bg-blue-600 hover:bg-blue-500 rounded-xl transition-all shadow-md shadow-blue-600/20 active:scale-95 whitespace-nowrap"
             >
               <span>Connect</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -174,12 +189,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
               <span className="text-sm font-bold font-display uppercase tracking-wide text-white">
-                Navigation
+                SUDARSHAN LAMA
               </span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
               aria-label="Close navigation menu"
             >
               <X className="w-5 h-5" />
@@ -187,7 +202,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </div>
 
           {/* Navigation Links with Automatic Close on Click */}
-          <nav className="flex flex-col gap-2 pt-6">
+          <nav className="flex flex-col gap-1.5 pt-5">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -195,7 +210,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
                   key={link.id}
                   href={link.href}
                   onClick={handleNavLinkClick}
-                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold font-display uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold font-display uppercase tracking-wider transition-all cursor-pointer ${
                     isActive
                       ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30'
                       : 'text-slate-300 hover:text-white hover:bg-white/5'
@@ -210,13 +225,26 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         </div>
 
         {/* Drawer Footer Actions & Socials */}
-        <div className="pt-6 border-t border-white/10 space-y-4">
+        <div className="pt-5 border-t border-white/10 space-y-3">
+          {onOpenResume && (
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                onOpenResume();
+              }}
+              className="w-full py-2.5 bg-cyan-950/60 hover:bg-cyan-900/80 text-cyan-300 border border-cyan-800/60 rounded-xl font-bold font-display text-xs uppercase tracking-wider text-center flex items-center justify-center gap-2 cursor-pointer shadow-md transition-all active:scale-95"
+            >
+              <FileText className="w-3.5 h-3.5 text-cyan-400" />
+              <span>View Résumé (PDF)</span>
+            </button>
+          )}
+
           <a
             href="#contact"
             onClick={handleNavLinkClick}
             className="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold font-display text-xs uppercase tracking-wider text-center block shadow-lg shadow-blue-600/30 transition-transform active:scale-95"
           >
-            Get In Touch
+            Let's Connect
           </a>
 
           {/* Quick Social Icons inside Drawer */}
@@ -258,7 +286,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </div>
 
           <p className="text-[10px] text-center text-slate-500 font-mono">
-            Sudarshan Lama • BIT Sem 1
+            Sudarshan Lama • BIT Student
           </p>
         </div>
       </aside>

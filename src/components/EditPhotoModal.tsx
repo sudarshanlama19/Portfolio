@@ -1,13 +1,17 @@
-import React, { useState, useRef } from 'react';
-import { X, Upload, Link, RotateCcw, Check, Camera, Sparkles, AlertCircle, Loader2 } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, Upload, Link, RotateCcw, Check, Camera, Sparkles, AlertCircle, Loader2, LayoutGrid, AlignLeft, AlignCenter, AlignRight } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData.ts';
 import { compressImage } from '../utils/imageStorage.ts';
+
+export type PhotoPlacement = 'center' | 'left' | 'right';
 
 interface EditPhotoModalProps {
   isOpen: boolean;
   currentPhoto: string;
   photoSizeLevel: number;
+  photoPlacement: PhotoPlacement;
   onChangePhotoSize: (level: number) => void;
+  onChangePhotoPlacement: (placement: PhotoPlacement) => void;
   onSavePhoto: (newPhotoUrl: string) => void;
   onResetPhoto: () => void;
   onClose: () => void;
@@ -17,7 +21,9 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
   isOpen,
   currentPhoto,
   photoSizeLevel,
+  photoPlacement,
   onChangePhotoSize,
+  onChangePhotoPlacement,
   onSavePhoto,
   onResetPhoto,
   onClose,
@@ -30,6 +36,15 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
   const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Sync photoPreview whenever modal opens or currentPhoto changes
+  useEffect(() => {
+    if (isOpen) {
+      setPhotoPreview(currentPhoto);
+      setErrorMsg('');
+      setSaveSuccess(false);
+    }
+  }, [isOpen, currentPhoto]);
 
   if (!isOpen) return null;
 
@@ -85,7 +100,7 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
       setTimeout(() => {
         setSaveSuccess(false);
         onClose();
-      }, 700);
+      }, 600);
     } catch (err: any) {
       setErrorMsg('Could not save photo: ' + (err.message || 'Storage error'));
     }
@@ -103,31 +118,31 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="edit-photo-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md transition-opacity"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto"
       onClick={onClose}
     >
       <div
-        className="relative w-full max-w-lg bg-[#0D1525] border border-blue-900/50 rounded-3xl p-6 sm:p-8 shadow-2xl text-slate-100"
+        className="relative w-full max-w-lg bg-[#0D1525] border border-blue-900/50 rounded-3xl p-5 sm:p-7 shadow-2xl text-slate-100 my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800">
+        <div className="flex items-center justify-between pb-3.5 border-b border-slate-800">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-blue-600/20 text-blue-400">
               <Camera className="w-5 h-5" />
             </div>
             <div>
               <span className="text-[11px] font-semibold tracking-wider uppercase text-blue-400">
-                Personalize Hero Photo
+                Portfolio Customizer
               </span>
               <h3 id="edit-photo-title" className="text-xl font-bold font-display text-white">
-                Upload or Change Photo
+                Customize Photo & Layout
               </h3>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -135,8 +150,8 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
         </div>
 
         {/* Live Preview Area with transparent checkerboard & ambient glow */}
-        <div className="my-5 flex flex-col items-center justify-center">
-          <div className="relative w-44 h-56 rounded-2xl flex items-end justify-center overflow-hidden border-2 border-blue-500/40 shadow-2xl bg-gradient-to-b from-slate-900/40 to-slate-950/80 group">
+        <div className="my-4 flex flex-col items-center justify-center">
+          <div className="relative w-40 h-52 sm:w-44 sm:h-56 rounded-2xl flex items-end justify-center overflow-hidden border-2 border-blue-500/40 shadow-2xl bg-gradient-to-b from-slate-900/40 to-slate-950/80 group">
             {/* Ambient backlight glow */}
             <div className="absolute w-28 h-28 rounded-full bg-blue-600/30 blur-2xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
@@ -150,7 +165,7 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
                 src={photoPreview}
                 alt="Profile Preview"
                 referrerPolicy="no-referrer"
-                className="max-h-full max-w-full object-contain filter drop-shadow-[0_10px_20px_rgba(59,130,246,0.35)]"
+                className="max-h-full max-w-full object-contain object-top filter drop-shadow-[0_10px_20px_rgba(59,130,246,0.35)]"
                 onError={() => setErrorMsg('Could not load image. Please upload a file or check the URL.')}
               />
             )}
@@ -160,13 +175,52 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-xs text-blue-400 mt-2.5">
+          <div className="flex items-center gap-1.5 text-xs text-blue-400 mt-2">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Background removed & transparent PNG photos fully supported!</span>
+            <span>Background-removed transparent PNGs fully supported!</span>
+          </div>
+
+          {/* Convenient Layout Placement Selector (Sides / Center) */}
+          <div className="w-full mt-3 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                <LayoutGrid className="w-3.5 h-3.5 text-cyan-400" />
+                Photo Position (Center or Sides)
+              </span>
+              <span className="text-[11px] font-mono text-cyan-400 font-bold capitalize">
+                {photoPlacement === 'right' ? 'Right Beside Name' : 'Left Beside Name'}
+              </span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => onChangePhotoPlacement('left')}
+                className={`py-2 px-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  photoPlacement === 'left'
+                    ? 'bg-blue-600 text-white shadow-md font-bold'
+                    : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                <AlignLeft className="w-3.5 h-3.5" />
+                <span>Beside Name (Left)</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onChangePhotoPlacement('right')}
+                className={`py-2 px-2.5 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                  photoPlacement === 'right'
+                    ? 'bg-blue-600 text-white shadow-md font-bold'
+                    : 'bg-slate-950 text-slate-400 hover:text-white hover:bg-slate-800'
+                }`}
+              >
+                <AlignRight className="w-3.5 h-3.5" />
+                <span>Beside Name (Right)</span>
+              </button>
+            </div>
           </div>
 
           {/* Photo Size & Scale Adjuster */}
-          <div className="w-full mt-3 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
+          <div className="w-full mt-2.5 p-3 rounded-2xl bg-slate-900/90 border border-slate-800">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[11px] font-semibold text-slate-300 uppercase tracking-wider">
                 Photo Display Size
@@ -200,11 +254,11 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
           </div>
         </div>
 
-        {/* Tab Controls */}
-        <div className="flex items-center gap-2 mb-4 p-1 bg-slate-900/90 rounded-xl border border-slate-800">
+        {/* Tab Controls for Upload / URL */}
+        <div className="flex items-center gap-2 mb-3.5 p-1 bg-slate-900/90 rounded-xl border border-slate-800">
           <button
             onClick={() => setActiveTab('upload')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
               activeTab === 'upload'
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white'
@@ -215,7 +269,7 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
           </button>
           <button
             onClick={() => setActiveTab('url')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
+            className={`flex-1 flex items-center justify-center gap-2 py-1.5 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
               activeTab === 'url'
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'text-slate-400 hover:text-white'
@@ -228,7 +282,7 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
 
         {/* Tab Content */}
         {activeTab === 'upload' ? (
-          <div className="space-y-3">
+          <div>
             <input
               type="file"
               ref={fileInputRef}
@@ -244,26 +298,26 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
               }}
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDrop}
-              className={`w-full py-6 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-2 transition-all cursor-pointer group ${
+              className={`w-full py-5 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all cursor-pointer group ${
                 isDragging
                   ? 'border-blue-400 bg-blue-950/40 scale-102'
                   : 'border-slate-700 hover:border-blue-500 bg-slate-900/40 hover:bg-slate-900/80'
               }`}
             >
-              <div className="p-3 rounded-full bg-blue-600/20 text-blue-400 group-hover:scale-110 transition-transform">
-                <Upload className="w-5 h-5" />
+              <div className="p-2.5 rounded-full bg-blue-600/20 text-blue-400 group-hover:scale-110 transition-transform">
+                <Upload className="w-4 h-4" />
               </div>
               <span className="text-xs font-semibold text-white">
                 Click to browse photo or drag & drop here
               </span>
               <span className="text-[11px] text-slate-500">
-                Supports background-removed PNG, WebP, and JPG files
+                Preserves transparent cutout backgrounds
               </span>
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
-            <label className="text-xs font-medium text-slate-400 block">
+          <div className="space-y-2">
+            <label className="text-[11px] font-medium text-slate-400 block">
               Direct Image Link / CDN URL
             </label>
             <div className="flex gap-2">
@@ -272,11 +326,11 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
                 value={urlInput}
                 onChange={(e) => setUrlInput(e.target.value)}
                 placeholder="https://example.com/transparent-photo.png"
-                className="flex-1 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
+                className="flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-blue-500"
               />
               <button
                 onClick={handleApplyUrl}
-                className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
+                className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-xl transition-colors cursor-pointer"
               >
                 Apply
               </button>
@@ -294,12 +348,12 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
         {saveSuccess && (
           <div className="mt-3 p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-800 text-emerald-300 text-xs text-center flex items-center justify-center gap-2">
             <Check className="w-4 h-4 text-emerald-400" />
-            <span>Profile photo saved successfully!</span>
+            <span>Profile photo and placement saved successfully!</span>
           </div>
         )}
 
         {/* Footer Actions */}
-        <div className="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+        <div className="mt-4 pt-3.5 border-t border-slate-800 flex items-center justify-between">
           <button
             onClick={handleReset}
             className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors cursor-pointer"
@@ -312,7 +366,7 @@ export const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer"
+              className="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors cursor-pointer"
             >
               Cancel
             </button>

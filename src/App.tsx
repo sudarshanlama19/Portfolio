@@ -14,7 +14,12 @@ import { Journey } from './components/Journey.tsx';
 import { Contact } from './components/Contact.tsx';
 import { Footer } from './components/Footer.tsx';
 import { ScrollProgress } from './components/ScrollProgress.tsx';
-import { EditPhotoModal } from './components/EditPhotoModal.tsx';
+import { EditPhotoModal, PhotoPlacement } from './components/EditPhotoModal.tsx';
+import { OwnerAuthModal } from './components/OwnerAuthModal.tsx';
+import { ResumeModal } from './components/ResumeModal.tsx';
+import { CustomCursor } from './components/CustomCursor.tsx';
+import { AIPortfolioAssistant } from './components/AIPortfolioAssistant.tsx';
+import { OwnerProvider } from './context/OwnerContext.tsx';
 import { PERSONAL_INFO } from './data/portfolioData.ts';
 import {
   saveProfilePhoto,
@@ -23,13 +28,15 @@ import {
   compressImage,
 } from './utils/imageStorage.ts';
 
-export default function App() {
+function PortfolioApp() {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [profilePhoto, setProfilePhoto] = useState<string>(PERSONAL_INFO.profileImage);
   const [photoSizeLevel, setPhotoSizeLevel] = useState<number>(3);
+  const [photoPlacement, setPhotoPlacement] = useState<PhotoPlacement>('left');
   const [isEditPhotoOpen, setIsEditPhotoOpen] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
-  // Initialize and persist theme, custom profile photo, & size
+  // Initialize and persist theme, custom profile photo, size, & layout placement
   useEffect(() => {
     // Theme setup
     const savedTheme = localStorage.getItem('sudarshan_theme') as 'dark' | 'light' | null;
@@ -47,12 +54,27 @@ export default function App() {
       if (parsed >= 1 && parsed <= 5) setPhotoSizeLevel(parsed);
     }
 
+    // Photo placement setup: Ensure photo is placed beside the name ('left' or 'right')
+    const savedPlacement = localStorage.getItem('sudarshan_photo_placement') as PhotoPlacement | null;
+    if (savedPlacement === 'left' || savedPlacement === 'right') {
+      setPhotoPlacement(savedPlacement);
+    } else {
+      setPhotoPlacement('left');
+      localStorage.setItem('sudarshan_photo_placement', 'left');
+    }
+
     // Load saved custom photo from IndexedDB / LocalStorage / Server
     (async () => {
       try {
         const saved = await loadSavedProfilePhoto();
         if (saved) {
           setProfilePhoto(saved);
+          // Sync saved photo to server so it permanently updates public/assets/images/profile.png on disk
+          fetch('/api/upload-profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ imageBase64: saved }),
+          }).catch(() => {});
           return;
         }
 
@@ -93,6 +115,11 @@ export default function App() {
     localStorage.setItem('sudarshan_photo_size_level', String(newLevel));
   };
 
+  const handlePhotoPlacementChange = (newPlacement: PhotoPlacement) => {
+    setPhotoPlacement(newPlacement);
+    localStorage.setItem('sudarshan_photo_placement', newPlacement);
+  };
+
   const handleDirectDropPhoto = async (file: File) => {
     try {
       const compressed = await compressImage(file, 900);
@@ -105,20 +132,30 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative selection:bg-blue-600 selection:text-white">
+      {/* Custom Fluid Cursor & Follower Ring */}
+      <CustomCursor />
+
       {/* Scroll Progress Bar & Back to top button */}
       <ScrollProgress />
 
       {/* Navigation */}
-      <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Navbar
+        theme={theme}
+        toggleTheme={toggleTheme}
+        onOpenResume={() => setIsResumeOpen(true)}
+      />
 
       {/* Main Content Sections */}
       <main>
         <Hero
           profilePhoto={profilePhoto}
           photoSizeLevel={photoSizeLevel}
+          photoPlacement={photoPlacement}
           onChangePhotoSize={handlePhotoSizeChange}
+          onChangePhotoPlacement={handlePhotoPlacementChange}
           onEditPhoto={() => setIsEditPhotoOpen(true)}
           onDropPhoto={handleDirectDropPhoto}
+          onOpenResume={() => setIsResumeOpen(true)}
         />
         <About />
         <Education />
@@ -131,16 +168,38 @@ export default function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Modal to edit or upload background-removed profile photo */}
+      {/* AI Portfolio Assistant Chatbot */}
+      <AIPortfolioAssistant />
+
+      {/* Downloadable Résumé PDF Modal */}
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
+
+      {/* Owner Authentication Modal (Required to edit photo) */}
+      <OwnerAuthModal onSuccess={() => setIsEditPhotoOpen(true)} />
+
+      {/* Modal to edit or upload background-removed profile photo and change layout */}
       <EditPhotoModal
         isOpen={isEditPhotoOpen}
         currentPhoto={profilePhoto}
         photoSizeLevel={photoSizeLevel}
+        photoPlacement={photoPlacement}
         onChangePhotoSize={handlePhotoSizeChange}
+        onChangePhotoPlacement={handlePhotoPlacementChange}
         onSavePhoto={handleSavePhoto}
         onResetPhoto={handleResetPhoto}
         onClose={() => setIsEditPhotoOpen(false)}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <OwnerProvider>
+      <PortfolioApp />
+    </OwnerProvider>
   );
 }

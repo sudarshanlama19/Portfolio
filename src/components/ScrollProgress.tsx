@@ -33,11 +33,11 @@ export const ScrollProgress: React.FC = () => {
         />
       </div>
 
-      {/* Floating Back to Top Button */}
+      {/* Floating Back to Top Button (Positioned on the left side to avoid AI assistant) */}
       {showBackToTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 p-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 transition-all duration-300 active:scale-95 group border border-white/20"
+          className="fixed bottom-6 left-6 z-40 p-3 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 transition-all duration-300 active:scale-95 group border border-white/20"
           aria-label="Back to top"
           title="Back to top"
         >
