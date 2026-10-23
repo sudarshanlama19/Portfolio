@@ -78,6 +78,49 @@ body {
   border-color: var(--border-hover);
 }
 
+/* Footer social glowing border effect matching theme accent */
+.footer-social-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem;
+  border-radius: 0.75rem;
+  background-color: var(--bg-surface, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  color: var(--text-secondary, #94a3b8);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  overflow: hidden;
+}
+
+.footer-social-btn:hover {
+  color: var(--text-primary, #ffffff);
+  border-color: var(--accent);
+  background-color: rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 18px var(--accent-glow), 0 0 6px var(--accent), inset 0 0 8px rgba(59, 130, 246, 0.08);
+  transform: translateY(-2.5px) scale(1.06);
+}
+
+.footer-social-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Smooth cursor blink animation for typewriter effect */
+@keyframes cursor-blink {
+  0%, 100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scaleY(0.85);
+  }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 0.9s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

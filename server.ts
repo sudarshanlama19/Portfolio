@@ -215,7 +215,7 @@ Key facts about Sudarshan Lama:
 - Academic Background & Distinctions:
   * Grade 10 (SEE): Vibhuti Vidhya Mandir, graduated with an outstanding Distinction GPA of 3.62 in 2024 AD.
   * Grade 12 (SLC): Southwestern State College, graduated with a 2.94 GPA in School Leaving Certificate (SLC) in 2026 AD.
-  * Higher Education: Currently enrolled in Semester 1 of Bachelor in Information Technology (BIT), affiliated with Tribhuvan University curriculum.
+  * Higher Education: Currently enrolled in Semester 1 of Bachelor in Information Technology (BIT) at Southwestern School of Management and Technology.
   * Certification: Completed Basic AI Bootcamp Training Certificate in 2026 AD after SLC (focused on prompt engineering, LLM architectures, and generative AI developer workflows).
 - Technical Skills & Stack:
   * Programming Languages: C Programming (pointers, memory management, structs, computational logic), JavaScript (ES6+), TypeScript.
@@ -245,7 +245,7 @@ function getFallbackAIResponse(userMessage: string): string {
   const lower = userMessage.toLowerCase();
 
   if (lower.includes('education') || lower.includes('slc') || lower.includes('see') || lower.includes('college') || lower.includes('gpa') || lower.includes('school')) {
-    return "Sudarshan Lama has a strong academic track record in Kathmandu, Nepal:\n• **Grade 10 (SEE)**: Graduated from Vibhuti Vidhya Mandir with a Distinction GPA of **3.62** (2024 AD).\n• **Grade 12 (SLC)**: Completed School Leaving Certificate (SLC) from Southwestern State College with a **2.94 GPA** (2026 AD).\n• **Certification**: Earned a Basic AI Bootcamp Training Certificate in **2026 AD** after SLC.\n• **Current Degree**: Enrolled in **Bachelor in Information Technology (BIT)** Semester 1.";
+    return "Sudarshan Lama has a strong academic track record in Kathmandu, Nepal:\n• **Current Degree**: Enrolled in **Bachelor in Information Technology (BIT)** Semester 1 at **Southwestern School of Management and Technology**.\n• **Grade 12 (SLC)**: Completed School Leaving Certificate (SLC) from Southwestern State College with a **2.94 GPA** (2026 AD).\n• **Grade 10 (SEE)**: Graduated from Vibhuti Vidhya Mandir with a Distinction GPA of **3.62** (2024 AD).\n• **Certification**: Earned a Basic AI Bootcamp Training Certificate in **2026 AD** after SLC.";
   }
 
   if (lower.includes('project') || lower.includes('gamehub') || lower.includes('arcade') || lower.includes('work')) {

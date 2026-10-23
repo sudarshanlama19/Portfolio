@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GraduationCap, Award, Calendar, CheckCircle, School, Sparkles, BookOpen } from 'lucide-react';
+import { GraduationCap, Award, Calendar, CheckCircle, School, Sparkles, BookOpen, MapPin, ExternalLink } from 'lucide-react';
 import { EDUCATION_DATA } from '../data/portfolioData.ts';
 import { staggerContainer, fadeInSlideUp } from './MotionWrappers.tsx';
 
@@ -90,10 +90,49 @@ export const Education: React.FC = () => {
                     <h3 className="text-xl sm:text-2xl font-bold font-display text-white mb-1">
                       {item.degree}
                     </h3>
-                    <div className="flex items-center gap-2 text-sm text-blue-300 font-medium mb-4">
-                      {isCert ? <Sparkles className="w-4 h-4 text-purple-400" /> : <School className="w-4 h-4 text-blue-400" />}
-                      <span>{item.institution}</span>
+                    <div className="flex flex-wrap items-center gap-2 text-sm text-blue-300 font-medium mb-2">
+                      {isCert ? (
+                        <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
+                      ) : (
+                        <School className="w-4 h-4 text-blue-400 shrink-0" />
+                      )}
+                      {item.mapUrl ? (
+                        <a
+                          href={item.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 hover:text-cyan-300 transition-colors group/map cursor-pointer"
+                          title={`Open in Google Maps: ${item.address || item.institution}`}
+                        >
+                          <span className="font-semibold group-hover/map:underline underline-offset-4 decoration-cyan-400">
+                            {item.institution}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-blue-950/80 border border-blue-800/40 text-cyan-300 group-hover/map:bg-blue-600 group-hover/map:text-white group-hover/map:border-cyan-400 transition-all">
+                            <MapPin className="w-3 h-3 text-cyan-400 group-hover/map:text-white" />
+                            <span>Google Maps</span>
+                            <ExternalLink className="w-2.5 h-2.5 opacity-70 group-hover/map:opacity-100" />
+                          </span>
+                        </a>
+                      ) : (
+                        <span>{item.institution}</span>
+                      )}
                     </div>
+
+                    {/* Address linking directly to Google Maps */}
+                    {item.address && (
+                      <div className="mb-4">
+                        <a
+                          href={item.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-cyan-300 transition-colors group/addr"
+                          title={`View location on Google Maps: ${item.address}`}
+                        >
+                          <MapPin className="w-3.5 h-3.5 text-blue-400 group-hover/addr:text-cyan-300 shrink-0" />
+                          <span className="group-hover/addr:underline underline-offset-2">{item.address}</span>
+                        </a>
+                      </div>
+                    )}
 
                     {/* GPA Metric if present */}
                     {item.gpa && (

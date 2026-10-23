@@ -24,13 +24,13 @@ export const Footer: React.FC = () => {
             </p>
           </div>
 
-          {/* Social Links */}
+          {/* Social Links with Glowing Theme Accent Border Effect */}
           <div className="flex items-center gap-3">
             <a
               href={PERSONAL_INFO.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white transition-colors"
+              className="footer-social-btn"
               aria-label="GitHub Profile"
               title="GitHub: sudarshanlama19"
             >
@@ -40,7 +40,7 @@ export const Footer: React.FC = () => {
               href={PERSONAL_INFO.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white transition-colors"
+              className="footer-social-btn"
               aria-label="LinkedIn Profile"
               title="LinkedIn: Sudarshan Lama"
             >
@@ -50,7 +50,7 @@ export const Footer: React.FC = () => {
               href={PERSONAL_INFO.socials.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white transition-colors"
+              className="footer-social-btn"
               aria-label="Instagram Profile"
               title="Instagram: _lama_sudarshan"
             >
@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
               href="https://wa.me/9779744690125"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-emerald-600 text-slate-300 hover:text-white transition-colors"
+              className="footer-social-btn"
               aria-label="WhatsApp (+977 9744690125)"
               title="WhatsApp: +977 9744690125"
             >
@@ -70,7 +70,7 @@ export const Footer: React.FC = () => {
             </a>
             <a
               href={`mailto:${PERSONAL_INFO.email}`}
-              className="p-2.5 rounded-xl bg-white/5 hover:bg-blue-600 text-slate-300 hover:text-white transition-colors"
+              className="footer-social-btn"
               aria-label="Email Sudarshan"
               title="Email: sudarshanlama09@gmail.com"
             >

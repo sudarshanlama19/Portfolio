@@ -20,6 +20,8 @@ export interface EducationItem {
   year: string;
   status?: string;
   highlights: string[];
+  address?: string;
+  mapUrl?: string;
 }
 
 export interface SkillItem {
@@ -34,4 +36,6 @@ export interface JourneyMilestone {
   title: string;
   description: string;
   highlight?: boolean;
+  address?: string;
+  mapUrl?: string;
 }

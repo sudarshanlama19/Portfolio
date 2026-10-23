@@ -1,8 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Compass, Target, Rocket, CheckCircle2, User, Award, School, MapPin } from 'lucide-react';
+import { BookOpen, Compass, Target, Rocket, CheckCircle2, User } from 'lucide-react';
 import { PERSONAL_INFO, ABOUT_STATS } from '../data/portfolioData.ts';
-import { staggerContainer, fadeInSlideUp, fadeInScale } from './MotionWrappers.tsx';
+import {
+  staggerContainer,
+  staggerFast,
+  fadeInSlideUp,
+  fadeInScale,
+  slideInRight,
+  defaultViewport,
+} from './MotionWrappers.tsx';
 
 export const About: React.FC = () => {
   return (
@@ -11,11 +18,15 @@ export const About: React.FC = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={defaultViewport}
           variants={staggerContainer}
         >
-          {/* Section Header */}
-          <motion.div className="mb-12" variants={fadeInSlideUp}>
+          {/* Section Header with Intersection-Observer Slide Up */}
+          <motion.div
+            className="mb-12"
+            variants={fadeInSlideUp}
+            viewport={defaultViewport}
+          >
             <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
               Background, Interests & Vision
             </span>
@@ -25,9 +36,13 @@ export const About: React.FC = () => {
             <div className="w-16 h-1 bg-blue-600 mt-4 rounded-full" />
           </motion.div>
 
-          {/* Narrative Block */}
+          {/* Narrative Block with Intersection-Observer Trigger */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-14">
-            <motion.div className="lg:col-span-8 space-y-5" variants={fadeInSlideUp}>
+            <motion.div
+              className="lg:col-span-8 space-y-5"
+              variants={fadeInSlideUp}
+              viewport={defaultViewport}
+            >
               <h3 className="text-2xl sm:text-3xl font-bold font-display text-white leading-snug">
                 Turning logical problem solving into{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-white">
@@ -39,9 +54,15 @@ export const About: React.FC = () => {
                 {PERSONAL_INFO.bio}
               </p>
 
-              {/* Four Core Pillars */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg">
+              {/* Four Core Pillars with Staggered Slide-Up */}
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2"
+                variants={staggerFast}
+              >
+                <motion.div
+                  variants={fadeInSlideUp}
+                  className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg"
+                >
                   <div className="flex items-center gap-2 text-sm font-bold text-cyan-400 pb-1 border-b border-white/5">
                     <BookOpen className="w-4 h-4 text-cyan-400" />
                     <span>Academic Background</span>
@@ -49,9 +70,12 @@ export const About: React.FC = () => {
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                     {PERSONAL_INFO.background}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg">
+                <motion.div
+                  variants={fadeInSlideUp}
+                  className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg"
+                >
                   <div className="flex items-center gap-2 text-sm font-bold text-cyan-400 pb-1 border-b border-white/5">
                     <Compass className="w-4 h-4 text-cyan-400" />
                     <span>Personal Interests</span>
@@ -59,9 +83,12 @@ export const About: React.FC = () => {
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                     {PERSONAL_INFO.interests}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg">
+                <motion.div
+                  variants={fadeInSlideUp}
+                  className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg"
+                >
                   <div className="flex items-center gap-2 text-sm font-bold text-indigo-400 pb-1 border-b border-white/5">
                     <Target className="w-4 h-4 text-indigo-400" />
                     <span>Current Learning Goals</span>
@@ -69,9 +96,12 @@ export const About: React.FC = () => {
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                     {PERSONAL_INFO.learningGoals}
                   </p>
-                </div>
+                </motion.div>
 
-                <div className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg">
+                <motion.div
+                  variants={fadeInSlideUp}
+                  className="p-5 rounded-2xl bg-[#0D1525] border border-blue-900/40 hover:border-blue-500/50 transition-colors space-y-2 shadow-lg"
+                >
                   <div className="flex items-center gap-2 text-sm font-bold text-emerald-400 pb-1 border-b border-white/5">
                     <Rocket className="w-4 h-4 text-emerald-400" />
                     <span>Future Ambitions</span>
@@ -79,8 +109,8 @@ export const About: React.FC = () => {
                   <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
                     {PERSONAL_INFO.futureAmbitions}
                   </p>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Work Ethic Checkmarks */}
               <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -102,6 +132,7 @@ export const About: React.FC = () => {
             <motion.div
               className="lg:col-span-4 p-6 rounded-3xl bg-[#0B1220] border border-blue-900/60 shadow-2xl space-y-4"
               variants={fadeInScale}
+              viewport={defaultViewport}
             >
               <div className="flex items-center gap-2.5 pb-3 border-b border-white/10">
                 <div className="w-8 h-8 rounded-xl bg-blue-600/20 text-cyan-400 flex items-center justify-center">
@@ -145,9 +176,12 @@ export const About: React.FC = () => {
             </motion.div>
           </div>
 
-          {/* 4 Feature Metric Cards */}
+          {/* 4 Feature Metric Cards with Scroll Reveal */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.18, margin: '-20px 0px' }}
             variants={staggerContainer}
           >
             {ABOUT_STATS.map((stat, index) => (

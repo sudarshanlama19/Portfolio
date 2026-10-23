@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Flag, Sparkles, Compass } from 'lucide-react';
+import { Flag, Sparkles, Compass, MapPin } from 'lucide-react';
 import { JOURNEY_DATA } from '../data/portfolioData.ts';
 import { staggerContainer, fadeInSlideUp, fadeInScale } from './MotionWrappers.tsx';
 
@@ -64,9 +64,31 @@ export const Journey: React.FC = () => {
                           )}
                         </div>
 
-                        <h3 className="text-base sm:text-lg font-bold font-display text-white mb-2">
-                          {milestone.title}
-                        </h3>
+                        {milestone.mapUrl ? (
+                          <div className="mb-2">
+                            <a
+                              href={milestone.mapUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-base sm:text-lg font-bold font-display text-white hover:text-cyan-300 transition-colors inline-flex items-center gap-1.5 group/m cursor-pointer"
+                              title={`Open in Google Maps: ${milestone.address || milestone.title}`}
+                            >
+                              <span className="group-hover/m:underline underline-offset-4 decoration-cyan-400">
+                                {milestone.title}
+                              </span>
+                              <MapPin className="w-4 h-4 text-cyan-400 shrink-0 group-hover/m:-translate-y-0.5 transition-transform" />
+                            </a>
+                            {milestone.address && (
+                              <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1">
+                                <span className="text-cyan-400 font-medium">Maps:</span> {milestone.address}
+                              </p>
+                            )}
+                          </div>
+                        ) : (
+                          <h3 className="text-base sm:text-lg font-bold font-display text-white mb-2">
+                            {milestone.title}
+                          </h3>
+                        )}
 
                         <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
                           {milestone.description}

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Compass, Github, Linkedin, Instagram, Mail, Send, FileText } from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData.ts';
 import { staggerContainer, fadeInSlideUp, fadeInScale } from './MotionWrappers.tsx';
 import { PhotoPlacement } from './EditPhotoModal.tsx';
+import { HeroParticles } from './HeroParticles.tsx';
 
 interface HeroProps {
   profilePhoto: string;
@@ -22,6 +23,40 @@ export const Hero: React.FC<HeroProps> = ({
   onOpenResume,
 }) => {
   const [isPhotoHovered, setIsPhotoHovered] = useState<boolean>(false);
+
+  // Typewriter effect state cycling through roles
+  const roles = ['BIT Student', 'Developer', 'AI Enthusiast'];
+  const [roleIndex, setRoleIndex] = useState<number>(0);
+  const [displayText, setDisplayText] = useState<string>('');
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting) {
+      if (displayText.length < currentRole.length) {
+        timer = setTimeout(() => {
+          setDisplayText(currentRole.slice(0, displayText.length + 1));
+        }, 90);
+      } else {
+        timer = setTimeout(() => {
+          setIsDeleting(true);
+        }, 1800);
+      }
+    } else {
+      if (displayText.length > 0) {
+        timer = setTimeout(() => {
+          setDisplayText(currentRole.slice(0, displayText.length - 1));
+        }, 45);
+      } else {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % roles.length);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, roleIndex]);
   // Substantially increased photo size classes
   const sizeClasses: Record<number, string> = {
     1: 'w-40 h-52 sm:w-48 sm:h-64 md:w-56 md:h-72',
@@ -91,6 +126,7 @@ export const Hero: React.FC<HeroProps> = ({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#070B13] via-[#070B13]/90 to-[#070B13]/70" />
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-blue-600/10 blur-[140px] rounded-full pointer-events-none" />
+        <HeroParticles />
       </div>
 
       <motion.div
@@ -156,10 +192,18 @@ export const Hero: React.FC<HeroProps> = ({
 
           {/* 3. SMALL DESCRIPTION BELOW PHOTO */}
           <div className="flex flex-col items-center text-center max-w-xl mx-auto mt-4 sm:mt-6 space-y-2.5">
-            {/* Headline */}
-            <h2 className="text-sm sm:text-base md:text-lg font-bold tracking-wide text-blue-300 font-display">
-              BIT Student | Aspiring Web Developer | AI Enthusiast
-            </h2>
+            {/* Typewriter Sub-Headline */}
+            <div className="flex items-center justify-center min-h-[1.85rem] sm:min-h-[2.2rem]">
+              <h2 className="text-sm sm:text-base md:text-lg lg:text-xl font-bold tracking-wide text-blue-300 font-display flex items-center justify-center">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-300 drop-shadow-[0_0_12px_rgba(56,189,248,0.4)]">
+                  {displayText || '\u00A0'}
+                </span>
+                <span
+                  className="inline-block w-0.5 h-4 sm:h-5 bg-cyan-400 rounded-full ml-1.5 shadow-[0_0_8px_rgba(34,211,238,0.9)] animate-cursor-blink"
+                  aria-hidden="true"
+                />
+              </h2>
+            </div>
 
             {/* Introduction Sentence */}
             <p className="text-xs sm:text-sm md:text-base text-slate-300 font-normal leading-relaxed max-w-lg mx-auto">

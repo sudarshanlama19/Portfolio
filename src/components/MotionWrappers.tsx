@@ -12,11 +12,57 @@ export const staggerContainer: Variants = {
   },
 };
 
+export const staggerFast: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
+};
+
+export const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
 export const fadeInSlideUp: Variants = {
   hidden: { opacity: 0, y: 36 },
   visible: {
     opacity: 1,
     y: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+export const slideInLeft: Variants = {
+  hidden: { opacity: 0, x: -36 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.55,
+      ease: [0.25, 0.1, 0.25, 1],
+    },
+  },
+};
+
+export const slideInRight: Variants = {
+  hidden: { opacity: 0, x: 36 },
+  visible: {
+    opacity: 1,
+    x: 0,
     transition: {
       duration: 0.55,
       ease: [0.25, 0.1, 0.25, 1],
@@ -36,6 +82,12 @@ export const fadeInScale: Variants = {
   },
 };
 
+export const defaultViewport = {
+  once: true,
+  amount: 0.18,
+  margin: '-40px 0px',
+};
+
 interface MotionSectionProps {
   id?: string;
   className?: string;
@@ -49,7 +101,7 @@ export const MotionSection: React.FC<MotionSectionProps> = ({ id, className, chi
       className={className}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={defaultViewport}
       variants={staggerContainer}
     >
       {children}

@@ -20,7 +20,7 @@ import {
   Maximize2
 } from 'lucide-react';
 import { FEATURED_PROJECT, PERSONAL_INFO } from '../data/portfolioData.ts';
-import { staggerContainer, fadeInSlideUp, fadeInScale } from './MotionWrappers.tsx';
+import { staggerContainer, fadeInSlideUp, fadeInScale, defaultViewport } from './MotionWrappers.tsx';
 
 export const Projects: React.FC = () => {
   const [showLiveEmbed, setShowLiveEmbed] = useState<boolean>(false);
@@ -37,13 +37,14 @@ export const Projects: React.FC = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.12 }}
+          viewport={defaultViewport}
           variants={staggerContainer}
         >
-          {/* Section Header */}
+          {/* Section Header with Intersection-Observer Slide Up */}
           <motion.div
             className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
             variants={fadeInSlideUp}
+            viewport={defaultViewport}
           >
             <div>
               <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
@@ -61,9 +62,12 @@ export const Projects: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Sole Featured Project: GameHub Arcade */}
+          {/* Sole Featured Project: GameHub Arcade with Intersection-Observer Reveal */}
           <motion.div
             className="group relative rounded-3xl bg-[#0D1525] border border-blue-900/50 hover:border-blue-500/60 transition-all duration-500 overflow-hidden shadow-2xl p-6 md:p-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15, margin: '-40px 0px' }}
             variants={fadeInScale}
           >
             {/* Project Header Info Bar */}
@@ -79,8 +83,12 @@ export const Projects: React.FC = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Visual Showcase */}
+            <motion.div
+              className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+              variants={staggerContainer}
+              viewport={defaultViewport}
+            >
+              {/* Visual Showcase with Intersection-Observer Slide Up */}
               <motion.div className="lg:col-span-7 overflow-hidden rounded-2xl relative" variants={fadeInSlideUp}>
                 <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-900 border border-white/10 shadow-2xl">
                   <img
@@ -202,7 +210,7 @@ export const Projects: React.FC = () => {
                   </a>
                 </div>
               </motion.div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* LIVE MULTI-DEVICE WEBSITE PREVIEWS MODAL (DESKTOP, TABLET, MOBILE) */}

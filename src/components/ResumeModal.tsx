@@ -108,7 +108,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                 <span style="font-weight: bold; color: #0f172a;">Bachelor in Information Technology (BIT)</span>
                 <span class="badge">Semester 1 • Enrolled (Present)</span>
               </div>
-              <div style="font-size: 9.5pt; color: #475569;">University Curriculum (Tribhuvan University Affiliated) • Kathmandu, Nepal</div>
+              <div style="font-size: 9.5pt; color: #475569;">Southwestern School of Management and Technology • Kathmandu, Nepal</div>
               <ul>
                 <li>Core curricula: Procedural Programming in C, Digital Logic, Computational Mathematics, and Computer Architecture.</li>
                 <li>Actively engaging in algorithm design and laboratory computing assignments.</li>
@@ -337,9 +337,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                         Semester 1 • Enrolled (Present)
                       </span>
                     </div>
-                    <span className="text-xs text-slate-400 block mb-2">
-                      University Curriculum (Tribhuvan University Affiliated) • Kathmandu, Nepal
-                    </span>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=South+western+marga%2C+Kathmandu%2C+Bagmati+Province+44600"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-cyan-400 hover:text-cyan-300 hover:underline inline-flex items-center gap-1 mb-2 font-medium"
+                      title="Open in Google Maps: South western marga, Kathmandu, Bagmati Province 44600"
+                    >
+                      <MapPin className="w-3 h-3 shrink-0" />
+                      <span>Southwestern School of Management and Technology • South western marga, Kathmandu</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                    </a>
                     <ul className="text-xs text-slate-300 space-y-1 list-disc pl-4">
                       <li>Studying C Programming, Computational Mathematics, and Computer Architecture foundations.</li>
                       <li>Engaging in algorithmic problem solving and hands-on laboratory computing.</li>
@@ -356,9 +364,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                         GPA: 2.94 • 2026 AD
                       </span>
                     </div>
-                    <span className="text-xs text-slate-400 block mb-2">
-                      Southwestern State College • Kathmandu, Nepal
-                    </span>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=%E0%A4%B0%E0%A4%BF%E0%A4%99%E0%A5%8D%E0%A4%97+%E0%A4%B0%E0%A5%8B%E0%A4%A1%2C+Kathmandu%2C+Bagmati+Province+44600"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-blue-400 hover:text-blue-300 hover:underline inline-flex items-center gap-1 mb-2 font-medium"
+                      title="Open in Google Maps: रिङ्ग रोड, Kathmandu, Bagmati Province 44600"
+                    >
+                      <MapPin className="w-3 h-3 shrink-0" />
+                      <span>Southwestern State College • रिङ्ग रोड, Kathmandu</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                    </a>
                     <p className="text-xs text-slate-300">
                       Strengthened mathematical reasoning, physics, and computer science foundations with laboratory computing projects.
                     </p>
@@ -374,9 +390,17 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
                         GPA: 3.62 (Distinction) • 2024 AD
                       </span>
                     </div>
-                    <span className="text-xs text-slate-400 block mb-2">
-                      Vibhuti Vidhya Mandir • Kathmandu, Nepal
-                    </span>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=P7GV%2B3CQ%2C+Ring+Rd%2C+Nagarjun%2C+Bagmati+Province+44600"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-emerald-400 hover:text-emerald-300 hover:underline inline-flex items-center gap-1 mb-2 font-medium"
+                      title="Open in Google Maps: P7GV+3CQ, Ring Rd, Nagarjun, Bagmati Province 44600"
+                    >
+                      <MapPin className="w-3 h-3 shrink-0" />
+                      <span>Vibhuti Vidhya Mandir • P7GV+3CQ, Ring Rd, Nagarjun</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                    </a>
                     <p className="text-xs text-slate-300">
                       Graduated with high academic distinction (3.62 GPA), discovering early passion for computational logic and programming.
                     </p>

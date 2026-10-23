@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code, Sparkles, Layout, Cpu, BookOpen, Layers } from 'lucide-react';
 import { SKILLS_DATA } from '../data/portfolioData.ts';
-import { staggerContainer, fadeInSlideUp } from './MotionWrappers.tsx';
+import { staggerContainer, staggerFast, fadeInSlideUp, defaultViewport } from './MotionWrappers.tsx';
 
 export const Skills: React.FC = () => {
   const [filter, setFilter] = useState<'all' | 'web' | 'programming' | 'ai' | 'design'>('all');
@@ -43,13 +43,14 @@ export const Skills: React.FC = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={defaultViewport}
           variants={staggerContainer}
         >
-          {/* Section Header */}
+          {/* Section Header with Intersection-Observer Slide Up */}
           <motion.div
             className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
             variants={fadeInSlideUp}
+            viewport={defaultViewport}
           >
             <div>
               <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
@@ -85,21 +86,26 @@ export const Skills: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Skills Grid */}
+          {/* Skills Grid with Intersection Observer Staggered Slide-Up */}
           <motion.div
             layout
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"
-            variants={staggerContainer}
+            variants={staggerFast}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.12, margin: '-20px 0px' }}
           >
             <AnimatePresence>
               {filteredSkills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
                   layout
-                  initial={{ opacity: 0, scale: 0.92 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  variants={fadeInSlideUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
                   exit={{ opacity: 0, scale: 0.92 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
+                  transition={{ duration: 0.4, delay: index * 0.04 }}
                   className="p-5 rounded-2xl bg-[#0D1525]/90 border border-white/10 hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1 group flex flex-col justify-between"
                 >
                   <div>
@@ -134,9 +140,12 @@ export const Skills: React.FC = () => {
             </AnimatePresence>
           </motion.div>
 
-          {/* Curriculum & Coding Focus Box */}
+          {/* Curriculum & Coding Focus Box with Intersection-Observer Slide Up */}
           <motion.div
             className="mt-10 p-5 rounded-2xl bg-blue-950/20 border border-blue-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs"
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
             variants={fadeInSlideUp}
           >
             <div className="flex items-center gap-3">

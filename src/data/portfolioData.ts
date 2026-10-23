@@ -7,7 +7,7 @@ export const PERSONAL_INFO = {
   tagline: "BIT Student | Aspiring Web Developer | AI Enthusiast",
   intro: "I enjoy learning new technologies and building creative digital projects.",
   bio: "I am a Bachelor in Information Technology (BIT) Semester 1 student based in Kathmandu, Nepal. Passionate about computer science foundations, modern web engineering, and artificial intelligence, I build interactive digital experiences while actively learning technologies that shape the web.",
-  background: "Currently pursuing a Bachelor in Information Technology (BIT) at university, with strong academic distinctions including a 3.62 GPA in Grade 10 (SEE) from Vibhuti Vidhya Mandir and completing Grade 12 (SLC) from Southwestern State College.",
+  background: "Currently pursuing a Bachelor in Information Technology (BIT) at Southwestern School of Management and Technology, with strong academic distinctions including a 3.62 GPA in Grade 10 (SEE) from Vibhuti Vidhya Mandir and completing Grade 12 (SLC) from Southwestern State College.",
   interests: "Web engineering, interactive browser platforms, procedural C programming, retro arcade game development, and modern generative AI tools.",
   learningGoals: "Mastering core data structures, memory architecture, advanced procedural and object-oriented systems, and scalable full-stack web applications.",
   futureAmbitions: "Aspiring software engineer dedicated to building high-performance, accessible, and creative digital applications that solve real-world problems.",
@@ -55,10 +55,12 @@ export const EDUCATION_DATA: EducationItem[] = [
   {
     id: "bit-current",
     period: "Current",
-    institution: "University Curriculum (Tribhuvan University Affiliated)",
+    institution: "Southwestern School of Management and Technology",
     degree: "Bachelor in Information Technology (BIT)",
     status: "Semester 1 • Currently Enrolled",
     year: "Present",
+    address: "South western marga, Kathmandu, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=South+western+marga%2C+Kathmandu%2C+Bagmati+Province+44600",
     highlights: [
       "Core computing foundations, algorithms, and computational logic",
       "C programming, digital logic, and computer organization",
@@ -85,6 +87,8 @@ export const EDUCATION_DATA: EducationItem[] = [
     degree: "School Leaving Certificate (SLC)",
     gpa: "2.94",
     year: "2026 AD",
+    address: "रिङ्ग रोड, Kathmandu, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=%E0%A4%B0%E0%A4%BF%E0%A4%99%E0%A5%8D%E0%A4%97+%E0%A4%B0%E0%A5%8B%E0%A4%A1%2C+Kathmandu%2C+Bagmati+Province+44600",
     highlights: [
       "Strengthened mathematical reasoning, physics, and computer science basics",
       "Engaged in laboratory computing exercises and technical project demonstrations"
@@ -97,6 +101,8 @@ export const EDUCATION_DATA: EducationItem[] = [
     degree: "Secondary Education Examination (SEE)",
     gpa: "3.62",
     year: "2024 AD",
+    address: "P7GV+3CQ, Ring Rd, Nagarjun, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=P7GV%2B3CQ%2C+Ring+Rd%2C+Nagarjun%2C+Bagmati+Province+44600",
     highlights: [
       "Achieved outstanding Distinction GPA of 3.62 in 2024 AD",
       "Early exploration of computer systems, algorithmic logic, and school tech events"
@@ -181,12 +187,16 @@ export const JOURNEY_DATA: JourneyMilestone[] = [
   {
     year: "2024 AD",
     title: "Completed Grade 10 at Vibhuti Vidhya Mandir",
-    description: "Achieved a 3.62 GPA distinction in Secondary Education Examination (SEE), sparking a passion for computational logic and programming."
+    description: "Achieved a 3.62 GPA distinction in Secondary Education Examination (SEE), sparking a passion for computational logic and programming.",
+    address: "P7GV+3CQ, Ring Rd, Nagarjun, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=P7GV%2B3CQ%2C+Ring+Rd%2C+Nagarjun%2C+Bagmati+Province+44600"
   },
   {
     year: "2026 AD",
     title: "Completed Grade 12 (SLC) at Southwestern State College",
-    description: "Graduated with a 2.94 GPA in School Leaving Certificate (SLC - Grade 12), strengthening foundations in science, mathematics, and computing."
+    description: "Graduated with a 2.94 GPA in School Leaving Certificate (SLC - Grade 12), strengthening foundations in science, mathematics, and computing.",
+    address: "रिङ्ग रोड, Kathmandu, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=%E0%A4%B0%E0%A4%BF%E0%A4%99%E0%A5%8D%E0%A4%97+%E0%A4%B0%E0%A5%8B%E0%A4%A1%2C+Kathmandu%2C+Bagmati+Province+44600"
   },
   {
     year: "2026 AD",
@@ -195,9 +205,11 @@ export const JOURNEY_DATA: JourneyMilestone[] = [
   },
   {
     year: "2026 AD",
-    title: "Enrolled in BIT (Bachelor in IT) & Built GameHub",
-    description: "Commenced Semester 1 of Bachelor in Information Technology, deepening C programming skills while building and launching the GameHub Arcade web platform.",
-    highlight: true
+    title: "Enrolled in BIT at Southwestern School of Management and Technology & Built GameHub",
+    description: "Commenced Semester 1 of Bachelor in Information Technology at Southwestern School of Management and Technology, deepening C programming skills while building and launching the GameHub Arcade web platform.",
+    highlight: true,
+    address: "South western marga, Kathmandu, Bagmati Province 44600",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=South+western+marga%2C+Kathmandu%2C+Bagmati+Province+44600"
   },
   {
     year: "Future Goals",
