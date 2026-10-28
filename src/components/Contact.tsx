@@ -406,7 +406,7 @@ export const Contact: React.FC = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="user-name" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-300 block mb-1.5">
-                      // name
+                      Name *
                     </label>
                     <input
                       id="user-name"
@@ -421,7 +421,7 @@ export const Contact: React.FC = () => {
 
                   <div>
                     <label htmlFor="user-email" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-300 block mb-1.5">
-                      // email
+                      Email *
                     </label>
                     <input
                       id="user-email"
@@ -437,7 +437,7 @@ export const Contact: React.FC = () => {
 
                 <div>
                   <label htmlFor="user-subject" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-300 block mb-1.5">
-                    // subject
+                    Subject
                   </label>
                   <input
                     id="user-subject"
@@ -451,7 +451,7 @@ export const Contact: React.FC = () => {
 
                 <div>
                   <label htmlFor="user-msg" className="text-xs font-mono font-semibold uppercase tracking-wider text-slate-300 block mb-1.5">
-                    // message_payload
+                    Message *
                   </label>
                   <textarea
                     id="user-msg"

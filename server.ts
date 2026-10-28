@@ -174,6 +174,7 @@ if (!fs.existsSync(messagesFile)) {
   fs.writeFileSync(messagesFile, JSON.stringify([], null, 2), 'utf-8');
 }
 
+
 interface ContactMessage {
   id: string;
   name: string;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code, Sparkles, Layout, Cpu, BookOpen, Layers } from 'lucide-react';
+import { Code, Sparkles, Layout, BookOpen, Layers } from 'lucide-react';
 import { SKILLS_DATA } from '../data/portfolioData.ts';
 import { staggerContainer, staggerFast, fadeInSlideUp, defaultViewport } from './MotionWrappers.tsx';
 
@@ -29,11 +29,11 @@ export const Skills: React.FC = () => {
       case 'web':
         return 'Web Development';
       case 'programming':
-        return 'Core Programming';
+        return 'Programming';
       case 'ai':
-        return 'AI & Tooling';
+        return 'AI & Productivity';
       default:
-        return 'Tools & Workflow';
+        return 'Design & Styling';
     }
   };
 
@@ -54,10 +54,10 @@ export const Skills: React.FC = () => {
           >
             <div>
               <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
-                Technical Competencies & Tools
+                Core Competencies & Stack
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight text-white">
-                SKILLS & TOOLKIT
+                TECHNICAL SKILLS & COMPETENCIES
               </h2>
               <div className="w-16 h-1 bg-blue-600 mt-4 rounded-full" />
             </div>
@@ -66,10 +66,10 @@ export const Skills: React.FC = () => {
             <div className="flex items-center gap-1.5 p-1.5 bg-[#0D1525] rounded-xl border border-white/10 self-start md:self-auto overflow-x-auto max-w-full">
               {[
                 { id: 'all', label: 'All' },
-                { id: 'web', label: 'Core Web' },
-                { id: 'programming', label: 'Programming (C)' },
-                { id: 'ai', label: 'AI Tools' },
-                { id: 'design', label: 'Tools & Workflow' },
+                { id: 'web', label: 'Web' },
+                { id: 'programming', label: 'Programming' },
+                { id: 'ai', label: 'AI' },
+                { id: 'design', label: 'Design' },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -157,7 +157,7 @@ export const Skills: React.FC = () => {
                   Undergraduate Curriculum & Practical Coding Focus
                 </h4>
                 <p className="text-xs text-slate-400 font-sans mt-0.5">
-                  Tribhuvan University affiliated Bachelor in Information Technology (BIT) Semester 1 coursework in C, digital logic, and modern web frameworks.
+                  Purbanchal University affiliated Bachelor in Information Technology (BIT) Semester 1 coursework in C, digital logic, and modern web frameworks.
                 </p>
               </div>
             </div>

@@ -17,7 +17,8 @@ import {
   Laptop,
   RotateCcw,
   Lock,
-  Maximize2
+  Maximize2,
+  Clock
 } from 'lucide-react';
 import { FEATURED_PROJECT, PERSONAL_INFO } from '../data/portfolioData.ts';
 import { staggerContainer, fadeInSlideUp, fadeInScale, defaultViewport } from './MotionWrappers.tsx';
@@ -27,6 +28,44 @@ export const Projects: React.FC = () => {
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [previewOrientation, setPreviewOrientation] = useState<'portrait' | 'landscape'>('portrait');
   const [iframeKey, setIframeKey] = useState<number>(1);
+
+  // Interactive 3D tilt and lift state for project cards
+  const [isCardHovered, setIsCardHovered] = useState<boolean>(false);
+  const [tiltAngles, setTiltAngles] = useState<{ rotateX: number; rotateY: number }>({ rotateX: 0, rotateY: 0 });
+  const [cursorPos, setCursorPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const handleCardMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Calculate normalized offset from center: -0.5 to 0.5
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+
+    // Subtle tilt: max ~5 degrees tilt along X and Y axes
+    setTiltAngles({
+      rotateX: -yPct * 6,
+      rotateY: xPct * 6,
+    });
+    setCursorPos({ x: mouseX, y: mouseY });
+  };
+
+  const handleCardMouseEnter = () => {
+    setIsCardHovered(true);
+  };
+
+  const handleCardMouseLeave = () => {
+    setIsCardHovered(false);
+    setTiltAngles({ rotateX: 0, rotateY: 0 });
+  };
+
+  // Helper to format estimated reading time
+  const getReadingTimeDisplay = (project: typeof FEATURED_PROJECT) => {
+    return project.readingTime || `${project.estimatedMinutes || 3} min read`;
+  };
 
   return (
     <section id="projects" className="py-24 relative bg-[#090F1C]/70 scroll-mt-8">
@@ -48,38 +87,77 @@ export const Projects: React.FC = () => {
           >
             <div>
               <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
-                Live Web Platform Showcase
+                Production Release & Interactive Games
               </span>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight text-white">
-                FEATURED WEBSITE
+                FEATURED PROJECTS & LIVE WEBSITES
               </h2>
               <div className="w-16 h-1 bg-blue-600 mt-4 rounded-full" />
             </div>
 
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-950/60 border border-blue-800/40 text-blue-300 text-xs font-medium">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Live & Deployed Online</span>
+              <span>Live Deployment</span>
             </div>
           </motion.div>
 
-          {/* Sole Featured Project: GameHub Arcade with Intersection-Observer Reveal */}
+          {/* Sole Featured Project: GameHub Arcade with Intersection-Observer Reveal & Interactive 3D Tilt / Lift */}
           <motion.div
-            className="group relative rounded-3xl bg-[#0D1525] border border-blue-900/50 hover:border-blue-500/60 transition-all duration-500 overflow-hidden shadow-2xl p-6 md:p-10"
+            variants={fadeInScale}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.15, margin: '-40px 0px' }}
-            variants={fadeInScale}
+            className="perspective-[1200px]"
           >
+            <motion.div
+              onMouseMove={handleCardMouseMove}
+              onMouseEnter={handleCardMouseEnter}
+              onMouseLeave={handleCardMouseLeave}
+              animate={{
+                rotateX: tiltAngles.rotateX,
+                rotateY: tiltAngles.rotateY,
+                y: isCardHovered ? -10 : 0,
+                scale: isCardHovered ? 1.012 : 1,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 280,
+                damping: 24,
+                mass: 0.6,
+              }}
+              style={{
+                transformStyle: 'preserve-3d',
+              }}
+              className="group relative rounded-3xl bg-[#0D1525] border border-blue-900/50 hover:border-blue-500/70 transition-colors duration-300 overflow-hidden shadow-2xl hover:shadow-[0_24px_60px_-12px_rgba(37,99,235,0.25)] p-6 md:p-10 cursor-pointer"
+            >
+              {/* Dynamic Interactive Sheen Spotlight */}
+              {isCardHovered && (
+                <div
+                  className="pointer-events-none absolute -inset-px rounded-3xl opacity-100 transition-opacity duration-300 z-10"
+                  style={{
+                    background: `radial-gradient(600px circle at ${cursorPos.x}px ${cursorPos.y}px, rgba(59, 130, 246, 0.12), transparent 50%)`,
+                  }}
+                />
+              )}
             {/* Project Header Info Bar */}
-            <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/10 text-xs text-slate-400">
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-white/10 text-xs text-slate-400">
               <div className="flex items-center gap-2 text-cyan-300 font-semibold">
                 <Gamepad2 className="w-4 h-4 text-cyan-400" />
                 <span>Interactive Web Arcade Platform</span>
               </div>
-              <div className="hidden sm:flex items-center gap-3 text-xs text-slate-400">
-                <span>Vite + Canvas Engine</span>
-                <span>•</span>
-                <span className="text-emerald-400 font-medium">Production Release</span>
+              <div className="flex items-center gap-3 text-xs text-slate-400">
+                {/* Estimated Reading Time Display */}
+                <div
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-950/60 border border-cyan-800/40 text-cyan-300 font-medium shadow-sm"
+                  title="Estimated reading time"
+                >
+                  <Clock className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                  <span>{getReadingTimeDisplay(FEATURED_PROJECT)}</span>
+                </div>
+                <span className="hidden sm:inline text-slate-600">•</span>
+                <span className="hidden sm:inline">Vite + Canvas Engine</span>
+                <span className="hidden sm:inline text-slate-600">•</span>
+                <span className="hidden sm:inline text-emerald-400 font-medium">Production Release</span>
               </div>
             </div>
 
@@ -101,9 +179,15 @@ export const Projects: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent opacity-80" />
 
                   {/* Badge floating */}
-                  <div className="absolute top-4 left-4 px-3.5 py-1.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/15 text-xs font-bold text-cyan-300 flex items-center gap-2">
-                    <Gamepad2 className="w-4 h-4 text-cyan-400" />
-                    <span>FLAGSHIP ARCADE PLATFORM</span>
+                  <div className="absolute top-4 left-4 flex items-center gap-2 flex-wrap">
+                    <div className="px-3.5 py-1.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/15 text-xs font-bold text-cyan-300 flex items-center gap-2">
+                      <Gamepad2 className="w-4 h-4 text-cyan-400" />
+                      <span>FLAGSHIP ARCADE PLATFORM</span>
+                    </div>
+                    <div className="hidden sm:flex px-2.5 py-1.5 rounded-xl bg-black/85 backdrop-blur-md border border-white/15 text-xs font-medium text-slate-200 items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-cyan-400" />
+                      <span>{getReadingTimeDisplay(FEATURED_PROJECT)}</span>
+                    </div>
                   </div>
 
                   {/* Live Link Badge */}
@@ -138,9 +222,18 @@ export const Projects: React.FC = () => {
               {/* Information Column */}
               <motion.div className="lg:col-span-5 flex flex-col justify-center space-y-4" variants={fadeInSlideUp}>
                 <div>
-                  <span className="text-xs font-semibold text-blue-400 uppercase tracking-widest block mb-1">
-                    {FEATURED_PROJECT.subtitle}
-                  </span>
+                  <div className="flex items-center justify-between gap-2 mb-1.5 flex-wrap">
+                    <span className="text-xs font-semibold text-blue-400 uppercase tracking-widest">
+                      {FEATURED_PROJECT.subtitle}
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300 text-[11px] font-medium"
+                      title="Estimated content reading time"
+                    >
+                      <Clock className="w-3 h-3 text-cyan-400 shrink-0" />
+                      <span>{getReadingTimeDisplay(FEATURED_PROJECT)}</span>
+                    </span>
+                  </div>
                   <h3 className="text-3xl sm:text-4xl font-bold font-display text-white group-hover:text-blue-300 transition-colors">
                     {FEATURED_PROJECT.title}
                   </h3>
@@ -212,6 +305,7 @@ export const Projects: React.FC = () => {
               </motion.div>
             </motion.div>
           </motion.div>
+        </motion.div>
 
           {/* LIVE MULTI-DEVICE WEBSITE PREVIEWS MODAL (DESKTOP, TABLET, MOBILE) */}
           {showLiveEmbed && (

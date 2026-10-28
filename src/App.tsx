@@ -13,6 +13,8 @@ import { Projects } from './components/Projects.tsx';
 import { Journey } from './components/Journey.tsx';
 import { Contact } from './components/Contact.tsx';
 import { Footer } from './components/Footer.tsx';
+import { SectionDivider } from './components/SectionDivider.tsx';
+import { InteractiveScene3D } from './components/InteractiveScene3D.tsx';
 import { ScrollProgress } from './components/ScrollProgress.tsx';
 import { EditPhotoModal, PhotoPlacement } from './components/EditPhotoModal.tsx';
 import { OwnerAuthModal } from './components/OwnerAuthModal.tsx';
@@ -132,6 +134,9 @@ function PortfolioApp() {
 
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 relative selection:bg-blue-600 selection:text-white">
+      {/* Interactive 3D Scene / Ambient Background Layer */}
+      <InteractiveScene3D />
+
       {/* Custom Fluid Cursor & Follower Ring */}
       <CustomCursor />
 
@@ -145,8 +150,8 @@ function PortfolioApp() {
         onOpenResume={() => setIsResumeOpen(true)}
       />
 
-      {/* Main Content Sections */}
-      <main>
+      {/* Main Content Sections with Decorative Animated Section Dividers */}
+      <main className="relative z-10">
         <Hero
           profilePhoto={profilePhoto}
           photoSizeLevel={photoSizeLevel}
@@ -157,11 +162,29 @@ function PortfolioApp() {
           onDropPhoto={handleDirectDropPhoto}
           onOpenResume={() => setIsResumeOpen(true)}
         />
+
+        <SectionDivider variant="diamond" accentColor="blue" />
+
         <About />
+
+        <SectionDivider variant="code" accentColor="cyan" />
+
         <Education />
+
+        <SectionDivider variant="diamond" accentColor="purple" />
+
         <Skills />
+
+        <SectionDivider variant="code" accentColor="blue" />
+
         <Projects />
+
+        <SectionDivider variant="glow" accentColor="cyan" />
+
         <Journey />
+
+        <SectionDivider variant="diamond" accentColor="blue" />
+
         <Contact />
       </main>
 

@@ -1,5 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Sun, Moon, ArrowUpRight, Github, Linkedin, Instagram, Mail, FileText } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Sun,
+  Moon,
+  ArrowUpRight,
+  Github,
+  Linkedin,
+  Instagram,
+  Mail,
+  FileText,
+  Home,
+  User,
+  GraduationCap,
+  Code2,
+  Gamepad2,
+  Compass,
+  Send,
+  ChevronRight,
+} from 'lucide-react';
 import { PERSONAL_INFO } from '../data/portfolioData.ts';
 
 interface NavbarProps {
@@ -14,13 +33,13 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
   const [activeSection, setActiveSection] = useState('home');
 
   const navLinks = [
-    { label: 'Home', href: '#home', id: 'home' },
-    { label: 'About', href: '#about', id: 'about' },
-    { label: 'Education', href: '#education', id: 'education' },
-    { label: 'Skills', href: '#skills', id: 'skills' },
-    { label: 'GameHub Arcade', href: '#projects', id: 'projects' },
-    { label: 'Journey', href: '#journey', id: 'journey' },
-    { label: 'Contact', href: '#contact', id: 'contact' },
+    { label: 'Home', href: '#home', id: 'home', icon: Home },
+    { label: 'About', href: '#about', id: 'about', icon: User },
+    { label: 'Education', href: '#education', id: 'education', icon: GraduationCap },
+    { label: 'Skills', href: '#skills', id: 'skills', icon: Code2 },
+    { label: 'Projects', href: '#projects', id: 'projects', icon: Gamepad2 },
+    { label: 'Journey', href: '#journey', id: 'journey', icon: Compass },
+    { label: 'Contact', href: '#contact', id: 'contact', icon: Send },
   ];
 
   // Prevent background scroll when mobile drawer is open
@@ -73,7 +92,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
   }, []);
 
   const handleNavLinkClick = () => {
-    // Automatically close the mobile menu on link click to enhance UX
     setMobileMenuOpen(false);
   };
 
@@ -98,7 +116,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
           </a>
 
           {/* Zone 2: Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-7 text-xs tracking-wider uppercase font-semibold text-slate-300">
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-xs tracking-wider uppercase font-semibold text-slate-300">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
@@ -118,7 +136,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
             })}
           </nav>
 
-          {/* Zone 3: Actions (Theme Toggle, Connect CTA, Hamburger) */}
+          {/* Zone 3: Actions (Theme Toggle, Résumé, Connect CTA, Hamburger) */}
           <div className="flex items-center gap-2 sm:gap-2.5">
             {/* Theme Toggle */}
             <button
@@ -153,12 +171,18 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
 
             {/* Mobile Hamburger Button */}
             <button
+              id="mobile-nav-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
-              aria-label="Toggle navigation menu"
+              className={`lg:hidden p-2 rounded-xl transition-all cursor-pointer active:scale-95 shrink-0 ${
+                mobileMenuOpen
+                  ? 'bg-blue-600/30 text-cyan-300 border border-blue-500/50 shadow-sm shadow-blue-500/20'
+                  : 'bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white border border-white/10'
+              }`}
+              aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5 text-blue-400" /> : <Menu className="w-5 h-5" />}
+              {mobileMenuOpen ? <X className="w-5 h-5 text-cyan-400" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -167,7 +191,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
       {/* Mobile Slide-in Drawer & Backdrop */}
       {/* 1. Backdrop Overlay with Fade Animation */}
       <div
-        className={`fixed inset-0 z-40 bg-black/75 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-black/80 backdrop-blur-md transition-opacity duration-300 lg:hidden ${
           mobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setMobileMenuOpen(false)}
@@ -176,48 +200,65 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
 
       {/* 2. Slide-In Drawer Panel with Smooth Spring-like Transform */}
       <aside
+        id="mobile-nav-drawer"
         role="dialog"
         aria-modal="true"
         aria-label="Mobile Navigation Menu"
-        className={`fixed top-0 right-0 bottom-0 z-50 w-full max-w-[300px] sm:max-w-xs bg-[#090F1C] border-l border-white/10 shadow-2xl flex flex-col justify-between p-6 transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed top-0 right-0 bottom-0 z-50 w-full max-w-[320px] sm:max-w-xs bg-[#090F1C] border-l border-white/10 shadow-2xl flex flex-col justify-between p-6 transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Drawer Header */}
+        {/* Drawer Header & Content */}
         <div>
-          <div className="flex items-center justify-between pb-5 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+          <div className="flex items-center justify-between pb-4 border-b border-white/10">
+            <div className="flex items-center gap-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
               <span className="text-sm font-bold font-display uppercase tracking-wide text-white">
                 SUDARSHAN LAMA
               </span>
             </div>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 border border-transparent hover:border-white/10 transition-colors cursor-pointer"
               aria-label="Close navigation menu"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-slate-300 hover:text-white" />
             </button>
           </div>
 
-          {/* Navigation Links with Automatic Close on Click */}
-          <nav className="flex flex-col gap-1.5 pt-5">
+          {/* Navigation Links with Category Icons & Auto-Close */}
+          <nav className="flex flex-col gap-1.5 pt-4" id="mobile-navigation">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
+              const Icon = link.icon;
               return (
                 <a
                   key={link.id}
                   href={link.href}
                   onClick={handleNavLinkClick}
-                  className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-bold font-display uppercase tracking-wider transition-all cursor-pointer ${
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold font-display uppercase tracking-wider transition-all cursor-pointer ${
                     isActive
-                      ? 'bg-blue-600/20 text-blue-400 border border-blue-500/30'
-                      : 'text-slate-300 hover:text-white hover:bg-white/5'
+                      ? 'bg-blue-600/25 text-cyan-300 border border-blue-500/40 shadow-sm shadow-blue-500/10'
+                      : 'text-slate-300 hover:text-white hover:bg-white/5 border border-transparent'
                   }`}
                 >
-                  <span>{link.label}</span>
-                  {isActive && <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />}
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+                        isActive
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'bg-white/5 text-slate-400'
+                      }`}
+                    >
+                      <Icon className="w-3.5 h-3.5" />
+                    </div>
+                    <span>{link.label}</span>
+                  </div>
+                  {isActive ? (
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                  ) : (
+                    <ChevronRight className="w-3.5 h-3.5 text-slate-500" />
+                  )}
                 </a>
               );
             })}
@@ -225,7 +266,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme, onOpenResume
         </div>
 
         {/* Drawer Footer Actions & Socials */}
-        <div className="pt-5 border-t border-white/10 space-y-3">
+        <div className="pt-5 border-t border-white/10 space-y-3 mt-4">
           {onOpenResume && (
             <button
               onClick={() => {

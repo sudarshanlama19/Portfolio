@@ -9,6 +9,8 @@ export interface Project {
   liveUrl: string;
   githubUrl?: string;
   features: string[];
+  readingTime?: string;
+  estimatedMinutes?: number;
 }
 
 export interface EducationItem {

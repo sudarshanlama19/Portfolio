@@ -17,7 +17,7 @@ export const Education: React.FC = () => {
           {/* Section Header */}
           <motion.div className="mb-14" variants={fadeInSlideUp}>
             <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
-              Academic Foundation & Certifications
+              Academic Journey & Credentials
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight text-white">
               EDUCATION & CERTIFICATIONS

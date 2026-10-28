@@ -33,7 +33,7 @@ export const DevStatusBar: React.FC<DevStatusBarProps> = ({ theme, toggleTheme }
         </div>
 
         <div className="hidden xl:flex items-center gap-1 text-slate-500">
-          <span>// BIT Curriculum: Tribhuvan Univ. Affiliated</span>
+          <span>// BIT Curriculum: Purbanchal Univ. Affiliated</span>
         </div>
       </div>
 

@@ -177,7 +177,9 @@ export const PROJECTS_GALLERY: Project[] = [
       "Real-time game mechanics, particle effects, and responsive controls",
       "Modern dark arcade aesthetic with animated interactive cards",
       "Smooth performance optimized across desktop, tablet, and mobile"
-    ]
+    ],
+    readingTime: "3 min read",
+    estimatedMinutes: 3
   }
 ];
 

@@ -7,7 +7,6 @@ import {
   staggerFast,
   fadeInSlideUp,
   fadeInScale,
-  slideInRight,
   defaultViewport,
 } from './MotionWrappers.tsx';
 
@@ -28,7 +27,7 @@ export const About: React.FC = () => {
             viewport={defaultViewport}
           >
             <span className="text-xs font-semibold tracking-widest uppercase text-blue-400 block mb-2">
-              Background, Interests & Vision
+              Background & Academic Journey
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold font-display uppercase tracking-tight text-white">
               ABOUT ME
@@ -140,7 +139,7 @@ export const About: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white font-display">
-                    Profile Overview
+                    Developer Summary
                   </h4>
                   <span className="text-xs text-slate-400">Undergraduate BIT Student</span>
                 </div>
@@ -148,7 +147,7 @@ export const About: React.FC = () => {
 
               <div className="space-y-3 pt-1 text-xs sm:text-sm">
                 <div className="pb-2.5 border-b border-white/5 flex justify-between items-center">
-                  <span className="text-slate-400">Current Study</span>
+                  <span className="text-slate-400">Degree Program</span>
                   <span className="text-cyan-300 font-bold">BIT Semester 1</span>
                 </div>
                 <div className="pb-2.5 border-b border-white/5 flex justify-between items-center">
@@ -164,8 +163,8 @@ export const About: React.FC = () => {
                   <span className="text-slate-200 font-bold">GPA 2.94</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-slate-400">Focus Areas</span>
-                  <span className="text-emerald-400 font-bold">Web, AI Tools & C</span>
+                  <span className="text-slate-400">Primary Focus</span>
+                  <span className="text-emerald-400 font-bold">Web & AI Development</span>
                 </div>
               </div>
 
